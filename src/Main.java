@@ -1,15 +1,70 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Coin coin1 = new Coin(5, 1999, 2.5, "Gold");
+        Coin coin2 = new Coin(5, 1999, 2.5, "Gold");
+        Coin coin3 = new Coin(10, 1990, 2.5, "Gold");
+        Coin coin4 = new Coin(50, 1899, 5, "Olovo");
+        Coin coin5 = new Coin(5, 1869, 10, "Silver");
+        Coin coin6 = new Coin(5, 1869, 10, "Zmetall");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        Set<Coin> coins = new TreeSet<>(new Comparator<Coin>() {
+            @Override
+            public int compare(Coin o1, Coin o2) {
+                //Сначала сортируем по металлу
+                if (!o1.getMetalName().equals(o2.getMetalName())) {
+                    return o1.getMetalName().compareTo(o2.getMetalName());
+                }
+
+                //Потом сортируем по году
+                if (o1.getYear() != o2.getYear()) {
+                    return o1.getYear() - o2.getYear();
+                }
+
+                //Потом сортируем по номиналу
+                if (o1.getNominal() != o2.getNominal()) {
+                    return o1.getNominal() - o2.getNominal();
+                }
+
+                //потом сортируем по диаметру
+                return Double.compare(o1.getDiameter(), o2.getDiameter());
+            }
+        });
+
+//        Set<Coin> coins = new TreeSet<>((o1, o2) -> {
+//            //Сначала сортируем по металлу
+//            if (!o1.getMetalName().equals(o2.getMetalName())) {
+//                return o1.getMetalName().compareTo(o2.getMetalName());
+//            }
+//
+//            //Потом сортируем по году
+//            if (o1.getYear() != o2.getYear()) {
+//                return o1.getYear() - o2.getYear();
+//            }
+//
+//            //Потом сортируем по номиналу
+//            if (o1.getNominal() != o2.getNominal()) {
+//                return o1.getNominal() - o2.getNominal();
+//            }
+//
+//            //потом сортируем по диаметру
+//            return Double.compare(o1.getDiameter(), o2.getDiameter());
+//        });
+
+        coins.add(coin1);
+        coins.add(coin2);
+        coins.add(coin3);
+        coins.add(coin4);
+        coins.add(coin5);
+        coins.add(coin6);
+
+        for (Coin coin : coins) {
+            System.out.println(coin);
         }
     }
 }
